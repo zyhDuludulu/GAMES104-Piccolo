@@ -60,26 +60,6 @@ Or you can use the following command to generate the **Visual Studio** project f
 cmake -S . -B build
 ```
 
-### Build on macOS
-
-> The following build instructions only tested on specific hardware of x86_64, and do not support M1 chips. For M1 compatible, we will release later.
-
-To compile Piccolo, you must have the most recent version of Xcode installed.
-Then run 'cmake' from the project's root directory, to generate a project of Xcode.
-
-```
-cmake -S . -B build -G "Xcode"
-```
-and you can build the project with
-```
-cmake --build build --config Release
-```
-
-Or you can execute the **build_macos.sh** to build the binaries.
-
-### Build on Ubuntu 20.04
-You can execute the **build_linux.sh** to build the binaries.
-
 ## Documentation
 For documentation, please refer to the Wiki section.
 
@@ -111,3 +91,12 @@ cmake -S . -B build -DENABLE_PHYSICS_DEBUG_RENDERER=ON
 Note:
 1. Please clean the build directory before regenerating the solution. We've encountered building problems in regenerating directly with previous CMakeCache.
 2. Physics Debug Renderer will run when you start PiccoloEditor. We've synced the camera position between both scenes. But the initial camera mode in Physics Debug Renderer is wrong. Scrolling down the mouse wheel once will change the camera of Physics Debug Renderer to the correct mode.
+
+### Homework 
+
+# Homework 2
+
+Construct a map from rgb to a uv coordinate on the lut. This method will process a post processing to the rendering pipeline.
+
+Note:
+If we want to use the color-grading, we need to restrict the level of mipmap to 1. (At engine/source/runtime/function/render/render_resource.cpp, line 88)
