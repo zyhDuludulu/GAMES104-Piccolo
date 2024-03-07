@@ -30,13 +30,34 @@ namespace Piccolo
             g_runtime_global_context.m_world_manager->getCurrentActivePhysicsScene().lock();
         ASSERT(physics_scene);
 
-        Vector3 final_position = current_position + displacement;
+        Vector3 final_position = current_position;
 
         Transform final_transform = Transform(final_position, Quaternion::IDENTITY, Vector3::UNIT_SCALE);
 
+        std::vector<PhysicsHitInfo> hits;
+        Vector3                     horizontal_displacement = Vector3(displacement.x, displacement.y, 0);
+        Vector3                     vertical_displacement   = Vector3(0, 0, displacement.z);
+        if (physics_scene->sweep(m_rigidbody_shape,
+                                 final_transform.getMatrix(),
+                                 horizontal_displacement.normalisedCopy(),
+                                 horizontal_displacement.length(),
+                                 hits))
+        {
+            Vector3 norm = hits[0].hit_normal.normalisedCopy();
+            Vector3 movement = horizontal_displacement - norm.dotProduct(horizontal_displacement) * norm * 1.1; // multiply 1.001 for accuracy
+            final_position += movement;
+        }
+        else
+        {
+            final_position += horizontal_displacement;
+        }
+
+        final_position += vertical_displacement;
+        final_transform.m_position = final_position;
+
         if (physics_scene->isOverlap(m_rigidbody_shape, final_transform.getMatrix()))
         {
-            final_position = current_position;
+            final_position -= horizontal_displacement;
         }
 
         return final_position;
