@@ -13,51 +13,23 @@
 |    Build Type     |                                                                                      Status                                                                                      |
 | :---------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | **Build Windows** | [![Build Windows](https://github.com/BoomingTech/Piccolo/actions/workflows/build_windows.yml/badge.svg)](https://github.com/BoomingTech/Piccolo/actions/workflows/build_windows.yml) |
-|  **Build Linux**  |    [![Build Linux](https://github.com/BoomingTech/Piccolo/actions/workflows/build_linux.yml/badge.svg)](https://github.com/BoomingTech/Piccolo/actions/workflows/build_linux.yml)    |
-|  **Build macOS**  |    [![Build macOS](https://github.com/BoomingTech/Piccolo/actions/workflows/build_macos.yml/badge.svg)](https://github.com/BoomingTech/Piccolo/actions/workflows/build_macos.yml)    |
 
 ## Prerequisites
 
 To build Piccolo, you must first install the following tools.
 
 ### Windows 10/11
-- Visual Studio 2019 (or more recent)
 - CMake 3.19 (or more recent)
 - Git 2.1 (or more recent)
-
-### macOS >= 10.15 (x86_64)
-- Xcode 12.3 (or more recent)
-- CMake 3.19 (or more recent)
-- Git 2.1 (or more recent)
-
-### Ubuntu 20.04
- - apt install the following packages
-```
-sudo apt install libxrandr-dev
-sudo apt install libxrender-dev
-sudo apt install libxinerama-dev
-sudo apt install libxcursor-dev
-sudo apt install libxi-dev
-sudo apt install libglvnd-dev
-sudo apt install libvulkan-dev
-sudo apt install cmake
-sudo apt install clang
-sudo apt install libc++-dev
-sudo apt install libglew-dev
-sudo apt install libglfw3-dev
-sudo apt install vulkan-validationlayers
-sudo apt install mesa-vulkan-drivers
-```
-- [NVIDIA driver](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile) (The AMD and Intel driver is open-source, and thus is installed automatically by mesa-vulkan-drivers)
 
 ## Build Piccolo
 
 ### Build on Windows
 You may execute the **build_windows.bat**. This batch file will generate the projects, and build the **Release** config of **Piccolo Engine** automatically. After successful build, you can find the PiccoloEditor.exe at the **bin** directory.
 
-Or you can use the following command to generate the **Visual Studio** project firstly, then open the solution in the build directory and build it manually.
+Because I want to use Clangd, so I use Ninja as my generator to generate 'compile_commands.json'
 ```
-cmake -S . -B build
+cmake -S . -B build -G Ninja
 ```
 
 ## Documentation
